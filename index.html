@@ -2,97 +2,227 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#5b2a86">
 <title>Halloween English Mission Rally</title>
 <style>
-  body {
-    font-family: "Arial";
-    text-align: center;
-    background: #fbe9e7;
-    margin: 0;
-    padding: 0;
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+  body{
+    background:#5b2a86;
+    color:#24142f;
+    overflow:hidden;
   }
-  .card {
-    background: white;
-    padding: 20px;
-    margin: 40px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  button{font:inherit;cursor:pointer;border:0}
+  .app{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:16px;position:relative;overflow:hidden;
+    background:linear-gradient(160deg,#4d2378 0%,#6d3196 55%,#ff8a1f 100%);
   }
-  button {
-    padding: 12px 20px;
-    font-size: 18px;
-    border-radius: 8px;
-    border: none;
-    background: #ff7043;
-    color: white;
+  .app:before,.app:after{
+    content:"";position:absolute;border-radius:50%;filter:blur(2px);opacity:.2
   }
-  button:hover {
-    background: #ff5722;
+  .app:before{width:280px;height:280px;background:#ff9d24;top:-90px;right:-70px}
+  .app:after{width:220px;height:220px;background:#b86cff;bottom:-80px;left:-70px}
+  .screen{
+    width:min(520px,100%);min-height:min(760px,calc(100vh - 32px));
+    border-radius:30px;background:#fff8ef;box-shadow:0 20px 60px #24142f66;
+    position:relative;z-index:1;overflow:hidden;display:flex;flex-direction:column;
   }
+  .screen.hidden{display:none}
+  .start{
+    background:
+      radial-gradient(circle at 20% 18%,#ffb13b 0 6%,transparent 7%),
+      radial-gradient(circle at 80% 27%,#c88cff 0 5%,transparent 6%),
+      linear-gradient(180deg,#4d2378,#702e92 70%,#ff8120);
+    color:white;text-align:center;padding:38px 25px 30px;justify-content:space-between;
+  }
+  .decor{display:flex;justify-content:space-between;font-size:55px}
+  .title{
+    font-size:clamp(35px,8vw,55px);line-height:.98;font-weight:950;
+    text-shadow:4px 5px 0 #32144e;margin:20px 0 12px;
+  }
+  .subtitle{font-size:18px;font-weight:800;letter-spacing:.5px}
+  .start-btn,.again-btn{
+    background:#ff8b1f;color:#fff;border:5px solid #fff;
+    border-radius:999px;padding:16px 45px;font-size:30px;font-weight:950;
+    box-shadow:0 9px 0 #bd5710,0 14px 24px #24142f55;
+    transition:.12s transform,.12s box-shadow;
+  }
+  .start-btn:active,.again-btn:active,.clear-btn:active{transform:translateY(6px);box-shadow:0 3px 0 #bd5710}
+  .mini{font-size:14px;opacity:.9;margin-top:14px}
+  .mission{
+    background:#fff0d9;
+  }
+  .topbar{padding:18px 22px;background:#5b2a86;color:#fff;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-weight:900;font-size:15px}
+  .counter{background:#ff9a2e;border-radius:999px;padding:7px 13px;font-weight:900}
+  .progress{height:8px;background:#e5cbb0}
+  .progress span{display:block;height:100%;background:#ff8120;width:14.285%;transition:.35s}
+  .mission-body{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:25px}
+  .badge{font-size:65px;margin-bottom:10px}
+  .mission-no{font-size:18px;font-weight:950;color:#6a398d;letter-spacing:2px}
+  .mission-title{font-size:clamp(30px,7vw,44px);font-weight:950;line-height:1.08;margin:14px 0 22px}
+  .mission-text{font-size:22px;font-weight:750;line-height:1.35}
+  .quote{display:inline-block;background:#fff;border:3px dashed #ff8120;border-radius:18px;padding:12px 17px;margin-top:18px;font-size:21px;font-weight:950}
+  .clear-btn{
+    background:#6a2d91;color:#fff;border-radius:20px;padding:17px 25px;
+    font-size:25px;font-weight:950;box-shadow:0 7px 0 #431b60;margin-top:28px;
+  }
+  .hint{font-size:14px;color:#6d5a72;margin-top:12px}
+  .complete{
+    background:linear-gradient(180deg,#fff8ef,#f7ddff);
+    text-align:center;padding:28px 22px;justify-content:center;
+  }
+  .stars{font-size:36px;letter-spacing:5px}
+  .complete h1{font-size:clamp(33px,8vw,52px);line-height:1.02;color:#5b2a86;margin:16px 0}
+  .certificate{
+    background:#fffdf8;border:7px double #ff8b1f;border-radius:22px;
+    padding:22px 18px;box-shadow:0 10px 25px #5b2a8630;margin:10px 0 24px;
+  }
+  .certificate .seal{font-size:55px}
+  .certificate h2{margin:8px 0;color:#ff7414;font-size:28px}
+  .certificate p{margin:7px 0;font-weight:750}
+  .booth{background:#5b2a86;color:white;border-radius:15px;padding:10px;margin-top:15px;font-weight:900}
+  .again-btn{font-size:23px;padding:14px 34px;border-width:4px}
+  .footer-note{font-size:12px;color:#7a637f;margin-top:13px}
+  .toast{
+    position:fixed;left:50%;top:16px;transform:translate(-50%,-120px);
+    z-index:10;background:#ff8b1f;color:#fff;padding:13px 22px;border-radius:999px;
+    font-size:22px;font-weight:950;box-shadow:0 8px 25px #0004;transition:.3s;
+  }
+  .toast.show{transform:translate(-50%,0)}
+  .confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .confetti i{position:absolute;width:9px;height:18px;animation:fall 1.8s linear forwards}
+  @keyframes fall{from{transform:translateY(-30px) rotate(0)}to{transform:translateY(105vh) rotate(720deg)}}
+  @media(max-height:650px){.screen{min-height:calc(100vh - 20px)}.mission-body{padding:15px}.badge{font-size:45px}.mission-title{font-size:29px}.mission-text{font-size:18px}}
 </style>
 </head>
 <body>
+<div class="app">
+  <div id="toast" class="toast"></div>
 
-<div id="app"></div>
+  <section id="start" class="screen start">
+    <div>
+      <div class="decor"><span>🎃</span><span>👻</span><span>🦇</span></div>
+      <div class="title">Halloween<br>English<br>Mission Rally</div>
+      <div class="subtitle">🎃 7 missions • English • Magic! 🧙</div>
+    </div>
+    <div>
+      <button class="start-btn" id="startBtn">START</button>
+      <div class="mini">Ready for your Halloween mission?</div>
+    </div>
+  </section>
+
+  <section id="mission" class="screen mission hidden">
+    <div class="topbar">
+      <div class="brand">🎃 HALLOWEEN RALLY</div>
+      <div class="counter" id="counter">1 / 7</div>
+    </div>
+    <div class="progress"><span id="progress"></span></div>
+    <div class="mission-body">
+      <div class="badge" id="badge">🎃</div>
+      <div class="mission-no" id="missionNo">MISSION 1</div>
+      <div class="mission-title" id="missionTitle"></div>
+      <div class="mission-text" id="missionText"></div>
+      <div class="quote" id="quote"></div>
+      <button class="clear-btn" id="clearBtn">✨ CLEAR! ✨</button>
+      <div class="hint">Do the mission, then tap CLEAR!</div>
+    </div>
+  </section>
+
+  <section id="complete" class="screen complete hidden">
+    <div class="stars">✨ ⭐ ✨</div>
+    <h1>✨ You are a<br>Halloween Wizard! ✨</h1>
+    <div class="certificate">
+      <div class="seal">🧙‍♀️</div>
+      <h2>HALLOWEEN WIZARD</h2>
+      <p>MISSION RALLY COMPLETE!</p>
+      <p>🎃 7 / 7 Missions Cleared 🎃</p>
+      <div class="booth">🎁 Show this screen at the Prize Booth!</div>
+    </div>
+    <button class="again-btn" id="againBtn">PLAY AGAIN</button>
+    <div class="footer-note">Great job! Happy Halloween! 👻</div>
+    <div class="confetti" id="confetti"></div>
+  </section>
+</div>
 
 <script>
 const missions = [
-  "Say “Happy Halloween!”",
-  "Find something orange and point to it.",
-  "Make a scary face!",
-  "Say “Trick or Treat!”",
-  "Take a picture of a pumpkin.",
-  "Wave and say “Goodbye!” in English."
+  {emoji:"🎃", title:'Say "Happy Halloween!"', text:"Say it to 3 people!", quote:'"Happy Halloween!"'},
+  {emoji:"🧡", title:"Find 5 orange things", text:'Find five orange things, then say:', quote:'"I found orange!"'},
+  {emoji:"😱", title:"Make a scary face", text:"Make a scary face at your parent!", quote:"BOO! 👻"},
+  {emoji:"📸", title:"Take a Halloween photo", text:"Take a photo next to the Pumpkin Monster!", quote:"" },
+  {emoji:"👻", title:"Find 10 ghost ornaments", text:"Find ten ghost ornaments!", quote:"" },
+  {emoji:"🐱", title:"Make a cat sound", text:"Show us your best cat sound!", quote:'"Meow! Meow!"'},
+  {emoji:"🍬", title:'Say "Trick or Treat!"', text:"Say it 5 times!", quote:'"Trick or Treat!" × 5'}
 ];
 
-let index = 0;
+let current = 0;
+const start = document.getElementById("start");
+const mission = document.getElementById("mission");
+const complete = document.getElementById("complete");
+const startBtn = document.getElementById("startBtn");
+const clearBtn = document.getElementById("clearBtn");
+const againBtn = document.getElementById("againBtn");
+const badge = document.getElementById("badge");
+const missionNo = document.getElementById("missionNo");
+const missionTitle = document.getElementById("missionTitle");
+const missionText = document.getElementById("missionText");
+const quote = document.getElementById("quote");
+const counter = document.getElementById("counter");
+const progress = document.getElementById("progress");
+const toast = document.getElementById("toast");
 
-function renderStart() {
-  document.getElementById("app").innerHTML = `
-    <div class="card">
-      <h1>🎃 Halloween English Mission Rally</h1>
-      <p>Complete all missions and become a Halloween Wizard!</p>
-      <button onclick="start()">Start</button>
-    </div>
-  `;
+function showScreen(el){
+  [start,mission,complete].forEach(x=>x.classList.add("hidden"));
+  el.classList.remove("hidden");
 }
-
-function start() {
-  index = 0;
-  renderMission();
+function renderMission(){
+  const m=missions[current];
+  badge.textContent=m.emoji;
+  missionNo.textContent=`MISSION ${current+1}`;
+  counter.textContent=`${current+1} / ${missions.length}`;
+  missionTitle.textContent=m.title;
+  missionText.textContent=m.text;
+  quote.textContent=m.quote;
+  quote.style.display=m.quote ? "inline-block" : "none";
+  progress.style.width=((current+1)/missions.length*100)+"%";
 }
-
-function renderMission() {
-  document.getElementById("app").innerHTML = `
-    <div class="card">
-      <h2>Mission ${index + 1}</h2>
-      <p>${missions[index]}</p>
-      <button onclick="next()">Clear</button>
-    </div>
-  `;
+function pop(text){
+  toast.textContent=text;
+  toast.classList.add("show");
+  setTimeout(()=>toast.classList.remove("show"),1100);
 }
-
-function next() {
-  index++;
-  if (index < missions.length) {
-    renderMission();
-  } else {
-    renderComplete();
+function confetti(){
+  const box=document.getElementById("confetti");
+  box.innerHTML="";
+  for(let i=0;i<70;i++){
+    const p=document.createElement("i");
+    p.style.left=Math.random()*100+"%";
+    p.style.top=(-10-Math.random()*20)+"%";
+    p.style.background=["#ff8120","#6a2d91","#ffd447","#fff","#2d9cdb"][Math.floor(Math.random()*5)];
+    p.style.transform=`rotate(${Math.random()*360}deg)`;
+    p.style.animationDelay=(Math.random()*.7)+"s";
+    box.appendChild(p);
   }
 }
-
-function renderComplete() {
-  document.getElementById("app").innerHTML = `
-    <div class="card">
-      <h1>✨ You are a Halloween Wizard! ✨</h1>
-      <p>All missions completed!</p>
-      <button onclick="renderStart()">Play Again</button>
-    </div>
-  `;
-}
-
-renderStart();
+startBtn.onclick=()=>{
+  current=0; renderMission(); showScreen(mission); pop("🎃 Mission 1!");
+};
+clearBtn.onclick=()=>{
+  if(current < missions.length-1){
+    pop(["🎉 GREAT!","👻 BOO!","🧙 MAGIC!","🎃 AMAZING!"][current%4]);
+    current++;
+    setTimeout(renderMission,250);
+  }else{
+    showScreen(complete);
+    confetti();
+  }
+};
+againBtn.onclick=()=>{
+  current=0; renderMission(); showScreen(mission); pop("🎃 Mission 1!");
+};
 </script>
-
 </body>
 </html>
