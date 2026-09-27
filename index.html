@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Halloween English Mission Rally</title>
+<style>
+  body {
+    font-family: "Arial";
+    text-align: center;
+    background: #fbe9e7;
+    margin: 0;
+    padding: 0;
+  }
+  .card {
+    background: white;
+    padding: 20px;
+    margin: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  button {
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    background: #ff7043;
+    color: white;
+  }
+  button:hover {
+    background: #ff5722;
+  }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+const missions = [
+  "Say “Happy Halloween!”",
+  "Find something orange and point to it.",
+  "Make a scary face!",
+  "Say “Trick or Treat!”",
+  "Take a picture of a pumpkin.",
+  "Wave and say “Goodbye!” in English."
+];
+
+let index = 0;
+
+function renderStart() {
+  document.getElementById("app").innerHTML = `
+    <div class="card">
+      <h1>🎃 Halloween English Mission Rally</h1>
+      <p>Complete all missions and become a Halloween Wizard!</p>
+      <button onclick="start()">Start</button>
+    </div>
+  `;
+}
+
+function start() {
+  index = 0;
+  renderMission();
+}
+
+function renderMission() {
+  document.getElementById("app").innerHTML = `
+    <div class="card">
+      <h2>Mission ${index + 1}</h2>
+      <p>${missions[index]}</p>
+      <button onclick="next()">Clear</button>
+    </div>
+  `;
+}
+
+function next() {
+  index++;
+  if (index < missions.length) {
+    renderMission();
+  } else {
+    renderComplete();
+  }
+}
+
+function renderComplete() {
+  document.getElementById("app").innerHTML = `
+    <div class="card">
+      <h1>✨ You are a Halloween Wizard! ✨</h1>
+      <p>All missions completed!</p>
+      <button onclick="renderStart()">Play Again</button>
+    </div>
+  `;
+}
+
+renderStart();
+</script>
+
+</body>
+</html>
